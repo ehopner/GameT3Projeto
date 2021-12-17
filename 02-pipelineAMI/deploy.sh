@@ -1,6 +1,8 @@
 #!/bin/bash
+export TF_VAR_PATH_KEY="/home/ubuntu/ehopner-dev.pem"
+# /var/lib/jenkins/id_rsa
 
-cd terraform
+cd 02-pipelineAMI/terraform
 terraform init
 terraform apply -auto-approve
 
@@ -15,6 +17,6 @@ sleep 10 # 10 segundos
 
 cd ../ansible
 
-echo "Executando ansible ::::: [ ansible-playbook -i hosts provisionar.yml -u ubuntu --private-key /var/lib/jenkins/id_rsa ]"
+echo "Executando ansible ::::: [ ansible-playbook -i hosts provisionar.yml -u ubuntu --private-key $TF_VAR_PATH_KEY ]"
 #ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i hosts provisionar.yml -u ubuntu --private-key /var/lib/jenkins/id_rsa
-ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i hosts provisionar.yml -u ubuntu --private-key ~/id_rsa
+ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i hosts provisionar.yml -u ubuntu --private-key $TF_VAR_PATH_KEY
