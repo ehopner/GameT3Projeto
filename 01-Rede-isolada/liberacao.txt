@@ -1,0 +1,5 @@
+    VPC: vpc-086cac09e15d1fe09
+    Name: vpc-t3-tf
+    Division: Arcade Division
+    Subnet Pvt (1a) - Nome: subnet-t3-a-pvt / Id: subnet-0068b464f5fca4d43
+    Subnet Pub (1a) - Nome: subnet-t3-a-pub / Id: subnet-078762b3ef771b686
