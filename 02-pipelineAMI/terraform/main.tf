@@ -2,7 +2,7 @@ provider "aws" {
   region = "sa-east-1"
 }
 
-resource "aws_instance" "dev_img_kubernetes" {
+resource "aws_instance" "dev_img_kube_t3" {
   subnet_id                   = "${var.subnetId}"
   ami                         = "${var.amiId}"
   instance_type = "t2.large"
@@ -13,14 +13,14 @@ resource "aws_instance" "dev_img_kubernetes" {
     volume_size = 30
   }
   tags = {
-    Name = "dev-img-kubernetes"
+    Name = "dev_img_kube_t3"
   }
-  vpc_security_group_ids = [aws_security_group.projetofinal_kubernetes.id]
+  vpc_security_group_ids = [aws_security_group.projetofinal_kube_t3.id]
 }
 
-resource "aws_security_group" "projetofinal_kubernetes" {
-  name        = "projetofinal_kubernetes"
-  description = "projetofinal_kubernetes inbound traffic"
+resource "aws_security_group" "projetofinal_kube_t3" {
+  name        = "projetofinal_kube_t3"
+  description = "projetofinal_kube_t3 inbound traffic"
   vpc_id      = "${var.vpcId}"
 
   ingress = [
@@ -63,7 +63,7 @@ resource "aws_security_group" "projetofinal_kubernetes" {
   ]
 
   tags = {
-    Name = "projetofinal_kubernetes"
+    Name = "projetofinal_kube_t3"
   }
 }
 
@@ -84,11 +84,11 @@ variable "amiId" {
 }
 
 # terraform refresh para mostrar o ssh
-output "dev_img_kubernetes" {
+output "dev_img_kube_t3" {
   value = [
-    "resource_id: ${aws_instance.dev_img_kubernetes.id}",
-    "public_ip: ${aws_instance.dev_img_kubernetes.public_ip}",
-    "public_dns: ${aws_instance.dev_img_kubernetes.public_dns}",
-    "ssh -i /home/ubuntu/.ssh/id_rsa ubuntu@${aws_instance.dev_img_kubernetes.public_dns}"
+    "resource_id: ${aws_instance.dev_img_kube_t3.id}",
+    "public_ip: ${aws_instance.dev_img_kube_t3.public_ip}",
+    "public_dns: ${aws_instance.dev_img_kube_t3.public_dns}",
+    "ssh -i ~/id_rsa ubuntu@${aws_instance.dev_img_kube_t3.public_dns}"
   ]
 }
