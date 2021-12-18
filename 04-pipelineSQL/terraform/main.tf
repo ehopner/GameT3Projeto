@@ -12,9 +12,9 @@ resource "aws_instance" "mysql_instance-dev" {
     volume_size = 20
   }
   tags = {
-    Name = "projetofinal-mysql-dev"
+    Name = "t3-projetofinal-mysql-dev"
   }
-  vpc_security_group_ids = [aws_security_group.projetofinal-mysql-sgDev.id]
+  vpc_security_group_ids = [aws_security_group.t3-mysql-sgDev.id]
 }
 
 resource "aws_instance" "mysql_instance-stag" {
@@ -27,9 +27,9 @@ resource "aws_instance" "mysql_instance-stag" {
     volume_size = 20
   }
   tags = {
-    Name = "projetofinal-mysql-stag"
+    Name = "t3-projetofinal-mysql-stag"
   }
-  vpc_security_group_ids = [aws_security_group.projetofinal-mysql-sgStag.id]
+  vpc_security_group_ids = [aws_security_group.t3-mysql-sgStag.id]
 }
 
 resource "aws_instance" "mysql_instance-prod" {
@@ -42,13 +42,13 @@ resource "aws_instance" "mysql_instance-prod" {
     volume_size = 20
   }
   tags = {
-    Name = "projetofinal-mysql-prod"
+    Name = "t3-projetofinal-mysql-prod"
   }
-  vpc_security_group_ids = [aws_security_group.projetofinal-mysql-sgProd.id]
+  vpc_security_group_ids = [aws_security_group.t3-mysql-sgProd.id]
 }
 
-resource "aws_security_group" "projetofinal-mysql-sgDev" {
-  name        = "projetofinal-mysql-sgDev"
+resource "aws_security_group" "t3-mysql-sgDev" {
+  name        = "t3-mysql-sgDev"
   description = "acessos inbound traffic"
   vpc_id      = "${var.vpc_id}"
   ingress = [
@@ -89,12 +89,12 @@ resource "aws_security_group" "projetofinal-mysql-sgDev" {
     }
   ]
   tags = {
-    Name = "projetofinal-mysql-sgDev"
+    Name = "t3-mysql-sgDev"
   }
 }
 
-resource "aws_security_group" "projetofinal-mysql-sgStag" {
-  name        = "projetofinal-mysql-sgStag"
+resource "aws_security_group" "t3-mysql-sgStag" {
+  name        = "t3-mysql-sgStag"
   description = "acessos inbound traffic"
   vpc_id      = "${var.vpc_id}"
   ingress = [
@@ -135,12 +135,12 @@ resource "aws_security_group" "projetofinal-mysql-sgStag" {
     }
   ]
   tags = {
-    Name = "projetofinal-mysql-sgStag"
+    Name = "t3-mysql-sgStag"
   }
 }
 
-resource "aws_security_group" "projetofinal-mysql-sgProd" {
-  name        = "projetofinal-mysql-sgProd"
+resource "aws_security_group" "t3-mysql-sgProd" {
+  name        = "t3-mysql-sgProd"
   description = "acessos inbound traffic"
   vpc_id      = "${var.vpc_id}"
   ingress = [
@@ -181,7 +181,7 @@ resource "aws_security_group" "projetofinal-mysql-sgProd" {
     }
   ]
   tags = {
-    Name = "projetofinal-mysql-sgProd"
+    Name = "t3-mysql-sgProd"
   }
 }
 
@@ -205,6 +205,12 @@ variable "subnetPrivada" {
 variable "chave" {
   type        = string
 }
+
+variable PATH_KEY {
+  type = string
+  description = "path da chave"
+}
+
 
 output "output-mysql-dev" {
   value = [

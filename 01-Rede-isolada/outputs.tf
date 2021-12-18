@@ -5,6 +5,7 @@ output name_VPC {
     "Division: ${aws_vpc.main.tags.Negocio}",
     "Subnet Pvt (1a) - Nome: ${aws_subnet.subnet-t3-a-pvt.tags.Name} / Id: ${aws_subnet.subnet-t3-a-pvt.id}",
     "Subnet Pub (1a) - Nome: ${aws_subnet.subnet-t3-a-pub.tags.Name} / Id: ${aws_subnet.subnet-t3-a-pub.id}",
+    "Internet Gateway Id: ${aws_internet_gateway.gw_t3.id}",
   ]
 }
 
@@ -22,5 +23,6 @@ resource "local_file" "recursos_liberados" {
     Division: ${aws_vpc.main.tags.Negocio}
     Subnet Pvt (1a) - Nome: ${aws_subnet.subnet-t3-a-pvt.tags.Name} / Id: ${aws_subnet.subnet-t3-a-pvt.id}
     Subnet Pub (1a) - Nome: ${aws_subnet.subnet-t3-a-pub.tags.Name} / Id: ${aws_subnet.subnet-t3-a-pub.id}
+    Internet Gateway Id: ${aws_internet_gateway.gw_t3.id}
   EOF
 }
