@@ -3,13 +3,13 @@ cd 02-pipelineAMI/terraform
 
 uri=$(terraform output | grep public_ip | awk '{print $2;exit}' | sed -e "s/\",//g")
 
-kube_adm=$(ssh -i /var/lib/jenkins/id_rsa ubuntu@$uri 'kubeadm version')
+kube_adm=$(ssh -i $TF_VAR_PATH_KEY ubuntu@$uri 'kubeadm version')
 
 echo $kube_adm
 
 regex_kube='kubeadm version:'
 
-docker=$(ssh -i /var/lib/jenkins/id_rsa ubuntu@$uri 'docker --version')
+docker=$(ssh -i $TF_VAR_PATH_KEY ubuntu@$uri 'docker --version')
 
 echo $docker
 

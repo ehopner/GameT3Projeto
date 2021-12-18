@@ -9,7 +9,7 @@ resource "aws_instance" "mysql_instance-dev" {
   key_name = "${var.chave}"
   root_block_device {
     encrypted = true
-    volume_size = 20
+    volume_size = 30
   }
   tags = {
     Name = "t3-projetofinal-mysql-dev"
@@ -24,7 +24,7 @@ resource "aws_instance" "mysql_instance-stag" {
   key_name = "${var.chave}"
   root_block_device {
     encrypted = true
-    volume_size = 20
+    volume_size = 30
   }
   tags = {
     Name = "t3-projetofinal-mysql-stag"
@@ -39,7 +39,7 @@ resource "aws_instance" "mysql_instance-prod" {
   key_name = "${var.chave}"
   root_block_device {
     encrypted = true
-    volume_size = 20
+    volume_size = 30
   }
   tags = {
     Name = "t3-projetofinal-mysql-prod"
@@ -206,10 +206,10 @@ variable "chave" {
   type        = string
 }
 
-variable PATH_KEY {
-  type = string
-  description = "path da chave"
-}
+# variable PATH_KEY {
+#   type = string
+#   description = "path da chave"
+# }
 
 
 output "output-mysql-dev" {
