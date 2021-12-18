@@ -83,12 +83,17 @@ variable "amiId" {
   type        = string
 }
 
+variable PATH_KEY {
+  type = string
+  description = "path da chave"
+}
+
 # terraform refresh para mostrar o ssh
 output "dev_img_kube_t3" {
   value = [
     "resource_id: ${aws_instance.dev_img_kube_t3.id}",
     "public_ip: ${aws_instance.dev_img_kube_t3.public_ip}",
     "public_dns: ${aws_instance.dev_img_kube_t3.public_dns}",
-    "ssh -i ~/id_rsa ubuntu@${aws_instance.dev_img_kube_t3.public_dns}"
+    "ssh -i ${var.PATH_KEY} ubuntu@${aws_instance.dev_img_kube_t3.public_dns}"
   ]
 }
