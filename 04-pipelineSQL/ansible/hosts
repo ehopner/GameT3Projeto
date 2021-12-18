@@ -1,0 +1,6 @@
+[ec2-mysql-dev]
+10.99.51.227
+[ec2-mysql-stag]
+=
+[ec2-mysql-prod]
+=

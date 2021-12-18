@@ -1,0 +1,93 @@
+- hosts: all
+  environment:
+    DB_PASSWORD: "{{ lookup('env', 'DB_PASSWORD') }}"
+
+  tasks:
+    - name: "Roda: sudo apt update"
+      become: yes
+      apt:
+        update_cache: yes
+        #upgrade: yes
+
+    - name: "Instala pacotes"
+      apt:
+        name: "{{ item }}"
+        state: latest
+      become: yes # roda com sudo
+      with_items:
+        - mysql-server
+        - python3-pycurl
+        - python3-mysqldb
+
+
+    - name: "Lavanta serviço do mysql"
+      become: yes
+      service:
+        name: mysql
+        state: started
+    
+    - name: "Alterando senha usuario SQL"
+      become: yes
+      mysql_user:
+        name: "root"
+        host_all: true
+        password: "{{ lookup('env', 'DB_PASSWORD') }}"
+        priv: "*.*:ALL,GRANT"
+        state: present
+        check_implicit_admin: true
+
+    - name: "Tornando senha nova visivel para o Ansible"
+      become: yes
+      copy:
+        src: "dumpsql/.my.cnf"
+        dest: "/root/.my.cnf"
+        owner: root
+        mode: 0600
+
+    - name: "Libera acesso MySQL"
+      become: yes
+      lineinfile:
+        path: /etc/mysql/mysql.conf.d/mysqld.cnf
+        regexp: '^bind-address'
+        line: 'bind-address = 0.0.0.0'
+    
+    - name: "Libera acesso MySQL"
+      become: yes
+      lineinfile:
+        path: /etc/mysql/mysql.conf.d/mysqld.cnf
+        regexp: '^mysqlx-bind-address'
+        line: 'mysqlx-bind-address = 0.0.0.0'
+    
+    # TODO descobrir como fazer isso
+    # CREATE USER 'root'@'127.0.0.1' IDENTIFIED WITH mysql_native_password BY '';
+    # GRANT ALL PRIVILEGES ON *.* TO 'root'@'127.0.0.1';
+    # FLUSH PRIVILEGES;
+
+    # # liberando user root para conectar com qualquer IP
+    # CREATE USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY '';
+    # GRANT ALL PRIVILEGES ON *.* TO 'root'@'%';
+    # FLUSH PRIVILEGES;
+
+
+
+    - name: "Restart do serviço do mysql"
+      become: yes
+      service:
+        name: mysql
+        state: restarted
+
+    - name: "Cria o banco de dados MySQL"
+      become: yes
+      mysql_db:
+        name: SpringWebYoutubeTest
+        login_user: "root"
+        login_password: "{{ lookup('env', 'DB_PASSWORD') }}"
+        state: present
+
+    - name: "Copia Arquivo Dump SQL"
+      copy:
+        src: "dumpsql/dumpsql.sql"
+        dest: "/tmp/dumpsql.sql"
+    
+    - name: "Copia Dump para MySQL"
+      shell: "mysql -u root -p\"{{ lookup('env', 'DB_PASSWORD') }}\" < /tmp/dumpsql.sql"
