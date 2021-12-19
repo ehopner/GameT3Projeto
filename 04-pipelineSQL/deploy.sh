@@ -24,7 +24,7 @@ cd ../ansible
 
 echo $"[client]" > dumpsql/.my.cnf
 echo $"user=root" >> dumpsql/.my.cnf
-echo $"password=$PASSWORD" >> dumpsql/.my.cnf
+echo $"password=root" >> dumpsql/.my.cnf #$PASSWORD
 
 #ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i hosts provisionar.yml -u ubuntu --private-key ~/.ssh/chaveprivada.pem
 

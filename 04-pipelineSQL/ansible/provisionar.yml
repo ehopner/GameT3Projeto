@@ -31,7 +31,7 @@
       mysql_user:
         name: "root"
         host_all: true
-        password: "{{ lookup('env', 'DB_PASSWORD') }}"
+        password: "root" #"{{ lookup('env', 'DB_PASSWORD') }}"
         priv: "*.*:ALL,GRANT"
         state: present
         check_implicit_admin: true
@@ -81,7 +81,7 @@
       mysql_db:
         name: SpringWebYoutubeTest
         login_user: "root"
-        login_password: "{{ lookup('env', 'DB_PASSWORD') }}"
+        login_password: "root" #"{{ lookup('env', 'DB_PASSWORD') }}"
         state: present
 
     - name: "Copia Arquivo Dump SQL"
@@ -90,4 +90,4 @@
         dest: "/tmp/dumpsql.sql"
     
     - name: "Copia Dump para MySQL"
-      shell: "mysql -u root -p\"{{ lookup('env', 'DB_PASSWORD') }}\" < /tmp/dumpsql.sql"
+      shell: "mysql -u root -proot < /tmp/dumpsql.sql"
