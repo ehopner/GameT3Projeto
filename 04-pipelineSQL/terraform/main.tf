@@ -5,6 +5,7 @@ provider "aws" {
 resource "aws_instance" "mysql_instance-dev" {
   subnet_id = "${var.subnetPrivada}"
   ami = "${var.amiId}"
+  associate_public_ip_address = true
   instance_type = "t2.large"
   key_name = "${var.chave}"
   root_block_device {
@@ -20,6 +21,7 @@ resource "aws_instance" "mysql_instance-dev" {
 resource "aws_instance" "mysql_instance-stag" {
   subnet_id = "${var.subnetPrivada}"
   ami = "${var.amiId}"
+  associate_public_ip_address = true
   instance_type = "t2.large"
   key_name = "${var.chave}"
   root_block_device {
@@ -35,6 +37,7 @@ resource "aws_instance" "mysql_instance-stag" {
 resource "aws_instance" "mysql_instance-prod" {
   subnet_id = "${var.subnetPrivada}"
   ami = "${var.amiId}"
+  associate_public_ip_address = true
   instance_type = "t2.large"
   key_name = "${var.chave}"
   root_block_device {
@@ -214,16 +217,16 @@ variable "chave" {
 
 output "output-mysql-dev" {
   value = [
-    "mysql_instance_dev ${aws_instance.mysql_instance-dev.private_ip}"
+    "mysql_instance_dev ${aws_instance.mysql_instance-dev.public_dns}"
   ]
 }
 
 output "output-mysql-stag" {
   value = [
-    "mysql_instance_stag ${aws_instance.mysql_instance-stag.private_ip}"
+    "mysql_instance_stag ${aws_instance.mysql_instance-stag.public_dns}"
   ]
 }
 
 output "output-mysql-prod" {
-  value = ["mysql_instance_prod ${aws_instance.mysql_instance-prod.private_ip}"]
+  value = ["mysql_instance_prod ${aws_instance.mysql_instance-prod.public_dns}"]
 }
