@@ -1,0 +1,25 @@
+- hosts: all
+  become: yes
+  tasks:
+    - name: "Upload k8s-deploy"
+      copy:
+        src: "k8s-deploy"
+        dest: "~/"
+
+    - name: "Aplicar configmap prod"
+      shell: kubectl apply -f ~/k8s-deploy/mysql-configmap-prod.yml
+
+    - name: "Aplicar secret"
+      shell: kubectl apply -f ~/k8s-deploy/mysql-secret.yml
+
+    - name: "Aplicar deployment prod"
+      shell: kubectl apply -f ~/k8s-deploy/deployment-prod.yml
+
+    - name: "Aplicar nodeport prod"
+      shell: kubectl apply -f ~/k8s-deploy/nodeport-javadb-prod.yml
+
+    - shell: "kubectl get pods | grep java-deployment-prod"
+      register: ps
+    - debug:
+        msg: " '{{ ps.stdout_lines }}' "
+# ansible-playbook -i hosts provisionar.yml -u ubuntu --private-key ~/Desktop/devops/treinamentoItau
