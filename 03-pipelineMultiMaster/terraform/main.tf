@@ -4,7 +4,7 @@ provider "aws" {
 
 resource "aws_instance" "k8s_proxy" {
   subnet_id = "${var.subnets}" #preencher com o subnet id da publica
-  ami = "${var.amiId}"
+  ami = "ami-0e59f23edd14d9ea6"
   instance_type = "t2.large"
   associate_public_ip_address = true
   key_name = "${var.chave}"
@@ -20,7 +20,7 @@ resource "aws_instance" "k8s_proxy" {
 
 resource "aws_instance" "k8s_masters" {
   subnet_id = "${var.subnets}"
-  ami = "${var.amiId}"
+  ami = "ami-0e59f23edd14d9ea6"
   instance_type = "t2.large"
   associate_public_ip_address = true
   key_name = "${var.chave}"
@@ -40,7 +40,7 @@ resource "aws_instance" "k8s_masters" {
 
 resource "aws_instance" "k8s_workers" {
   subnet_id = "${var.subnets}"
-  ami = "${var.amiId}"
+  ami = "ami-0e59f23edd14d9ea6"
   instance_type = "t2.large"
   associate_public_ip_address = true
   key_name = "${var.chave}"
@@ -276,12 +276,12 @@ variable "amiId" {
 
 variable "subnets" {
   type        = string
-  default = "subnet-0df4c84deb2937ae2"
+  default = "subnet-07d3cd7fdf5c9e1b5"
   description = "publicSubNetId"
 }
 variable "vpcId" {
   type = string
-  default = "vpc-071b02541a42d8de0"
+  default = "vpc-0b6ce2c1dec842615"
   description = "vpcId"
 }
 variable "chave" {
